@@ -68,7 +68,7 @@ export default function SosTrackerWrapper() {
       setSosNavActive: s.setSosNavActive,
     })),
   );
-  const { handleComputeRoute } = useComputeRoute();
+  const { handleComputeRoute, isLoading: isRouting } = useComputeRoute();
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [session, setSession] = useState<SosPublicSession | null>(null);
   const [phase, setPhase] = useState<Phase>("none");
@@ -189,12 +189,19 @@ export default function SosTrackerWrapper() {
     }
     setSosNavActive(true);
     setDestinationName(session.address ?? t("sosTrackingRequesterLabel"));
-    setSheetMode("route");
+    // Only switch the sheet to the route screen once a route actually
+    // exists — switching earlier left the user staring at a bare spinner
+    // (BottomSheet/RouteContent's LoadingDrawer has no cancel/back affordance)
+    // with no way out if the request failed to resolve.
     const ok = await handleComputeRoute({
       destination: { lat: session.lat, lng: session.lng },
       travelMode: "drive",
     });
-    if (!ok) setSosNavActive(false);
+    if (ok) {
+      setSheetMode("route");
+    } else {
+      setSosNavActive(false);
+    }
   }, [
     session,
     userLocation,
@@ -338,9 +345,14 @@ export default function SosTrackerWrapper() {
                 <button
                   type="button"
                   onClick={handleNavigate}
-                  className="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-sm hover:bg-primary/95 hover:shadow transition-all"
+                  disabled={isRouting}
+                  className="flex-1 flex items-center justify-center gap-2 py-2 px-3 rounded-xl bg-primary text-primary-foreground font-semibold text-sm shadow-sm hover:bg-primary/95 hover:shadow transition-all disabled:opacity-60 disabled:pointer-events-none"
                 >
-                  <Navigation className="h-4 w-4" />
+                  {isRouting ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Navigation className="h-4 w-4" />
+                  )}
                   {t("sosTrackingNavigate")}
                 </button>
                 <button
