@@ -120,6 +120,7 @@
   "settingsEmergencyTitle": "Emergency contacts and SOS",
   "settingsEmergencyDesc": "Manage the people who receive SOS alerts and review their binding status.",
   "settingsEmergencyAction": "Manage emergency contacts",
+  "settingsSafetyLoginHint": "Log in to set up emergency contacts and SOS.",
   "aiMemoryTitle": "AI memory",
   "aiMemoryDesc": "Let the assistant remember your preferences, common places, and context so future replies fit you better.",
   "aiMemoryEnabled": "AI memory is enabled",

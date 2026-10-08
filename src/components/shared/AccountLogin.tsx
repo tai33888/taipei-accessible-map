@@ -442,9 +442,14 @@ export default function AccountLogin() {
                     </div>
                   )}
                   {settingsTab === "safety" && !user && (
-                    <p className="text-sm text-muted-foreground">
-                      {t("login")}
-                    </p>
+                    <div className="rounded-2xl border border-dashed border-border/70 bg-muted/20 p-5 space-y-3">
+                      <p className="text-sm text-muted-foreground">
+                        {t("settingsSafetyLoginHint")}
+                      </p>
+                      <Button size="sm" onClick={() => googleLogin()}>
+                        {t("login")}
+                      </Button>
+                    </div>
                   )}
                   {settingsTab === "memory" && (
                     <AIMemoryPanel
@@ -452,6 +457,7 @@ export default function AccountLogin() {
                         openDialog === "settings" && settingsTab === "memory"
                       }
                       loggedIn={Boolean(user)}
+                      onLogin={() => googleLogin()}
                     />
                   )}
                   {settingsTab === "data" && (

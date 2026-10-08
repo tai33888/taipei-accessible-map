@@ -78,9 +78,11 @@ function isMemorySource(
 export default function AIMemoryPanel({
   active,
   loggedIn,
+  onLogin,
 }: {
   active: boolean;
   loggedIn: boolean;
+  onLogin?: () => void;
 }) {
   const { t, i18n } = useAppTranslation();
   const [memories, setMemories] = useState<UserMemory[]>([]);
@@ -199,8 +201,15 @@ export default function AIMemoryPanel({
 
   if (!loggedIn) {
     return (
-      <div className="rounded-2xl border border-dashed border-border/70 bg-muted/20 p-5 text-sm text-muted-foreground">
-        {t("aiMemoryLoginHint")}
+      <div className="rounded-2xl border border-dashed border-border/70 bg-muted/20 p-5 space-y-3">
+        <p className="text-sm text-muted-foreground">
+          {t("aiMemoryLoginHint")}
+        </p>
+        {onLogin && (
+          <Button size="sm" onClick={onLogin}>
+            {t("login")}
+          </Button>
+        )}
       </div>
     );
   }

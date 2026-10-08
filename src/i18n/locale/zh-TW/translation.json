@@ -118,6 +118,7 @@
   "settingsEmergencyTitle": "緊急聯絡與 SOS",
   "settingsEmergencyDesc": "管理會收到求助通知的聯絡人與綁定狀態。",
   "settingsEmergencyAction": "管理緊急聯絡人",
+  "settingsSafetyLoginHint": "請先登入，才能設定緊急聯絡人與 SOS 功能。",
   "aiMemoryTitle": "AI 記憶",
   "aiMemoryDesc": "讓 AI 記住你的偏好、常去地點與使用情境，之後回應會更貼近你的需求。",
   "aiMemoryEnabled": "AI 記憶已啟用",
