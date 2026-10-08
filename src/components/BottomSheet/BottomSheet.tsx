@@ -388,7 +388,9 @@ export default function BottomSheet() {
           {!atPeek &&
             sheetMode !== "plan" &&
             sheetMode !== "route" &&
-            sheetMode !== "navigation" && (
+            sheetMode !== "navigation" &&
+            sheetMode !== "place" &&
+            sheetMode !== "station" && (
               <div className="flex items-center justify-between px-4 pb-2">
                 <h1 className="text-base font-bold flex items-center gap-1.5">
                   <Accessibility className="h-5 w-5 text-primary" />
@@ -518,7 +520,7 @@ export default function BottomSheet() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -8 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-[52px] bottom-0 bg-background/95 backdrop-blur-md rounded-xl shadow-xl border border-border/50 p-1.5 min-w-[140px] z-50"
+                  className="absolute left-[52px] bottom-0 bg-popover text-popover-foreground rounded-xl shadow-xl border border-border/50 p-1.5 min-w-[140px] z-50"
                 >
                   {RAIL_MORE_ITEMS.map((item) => {
                     const isActive =
