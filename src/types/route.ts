@@ -1,4 +1,5 @@
 // Types aligned with backend OpenAPI spec (POST /a11y/accessible-route)
+import i18n from "i18next";
 
 // --- GeoJSON ---
 export interface GeoPoint {
@@ -616,10 +617,19 @@ export function getLegColor(leg: RouteLeg): string {
   return LEG_COLORS[leg.type] || LEG_COLORS.BUS;
 }
 
+// Reads the live i18next language instead of taking a parameter so the
+// many call sites across RouteCard/NavigationHUD/etc. don't each need to
+// thread the current locale through — this always reflects the UI language
+// the user is looking at right now, including when they switch it mid-session.
 export function formatDuration(minutes: number): string {
   if (!Number.isFinite(minutes)) return "";
   const hours = Math.floor(minutes / 60);
   const mins = Math.round(minutes % 60);
+  if (i18n.language === "zh-TW") {
+    if (hours > 0)
+      return mins > 0 ? `${hours} 小時 ${mins} 分鐘` : `${hours} 小時`;
+    return `${mins} 分鐘`;
+  }
   if (hours > 0) return `${hours}h ${mins}min`;
   return `${mins} min`;
 }

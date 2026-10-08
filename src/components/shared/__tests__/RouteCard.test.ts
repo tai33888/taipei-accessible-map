@@ -345,9 +345,9 @@ describe("RouteCard", () => {
     expect(html).not.toContain("資料可信度");
     expect(html).not.toContain("450 m");
     expect(html).not.toContain("資料來源：台北市政府開放資料");
-    // exitNumber is a same-line addition to the always-visible exitInfo
-    // line (not selected-gated per the plan) — it must still show up.
-    expect(html).toContain("2 號出口");
+    // Leg details (including exitInfo) are gated behind the selected-only
+    // CardContent block, so the exit number is collapsed along with them.
+    expect(html).not.toContain("2 號出口");
   });
 
   it("shows every enhancement, correctly gated, when the card is selected", () => {
