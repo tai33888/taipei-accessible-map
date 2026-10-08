@@ -108,11 +108,17 @@ export default function EnvironmentPanel({
   // Refetch when the target toggles or the first GPS fix arrives (cache makes
   // repeat runs free).
   useEffect(() => {
-    // Querying the current location needs a GPS fix first; keep the spinner
-    // until it arrives (matches the previous behaviour).
-    if (target === "current" && !hasUserLocation) return;
+    // Querying the current location needs a GPS fix first. If one never
+    // arrives (permission denied, no signal), surface that instead of
+    // spinning forever.
+    if (target === "current" && !hasUserLocation) {
+      setLoading(false);
+      setData(null);
+      setError(t("noLocation"));
+      return;
+    }
     fetchEnvironment();
-  }, [fetchEnvironment, hasUserLocation, target]);
+  }, [fetchEnvironment, hasUserLocation, target, t]);
 
   return (
     <div className="space-y-4">

@@ -21,7 +21,11 @@ export default function RouteExplanationPanel({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!selectRoute?.route) return;
+    if (!selectRoute?.route) {
+      setLoading(false);
+      setExplanation(null);
+      return;
+    }
     setLoading(true);
     explainRoute(selectRoute.route, "normal", i18n.language as "zh-TW" | "en")
       .then((res) => {
